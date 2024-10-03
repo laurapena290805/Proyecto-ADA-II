@@ -26,16 +26,6 @@ r = 3
 i = 2
 k = 1
 
-def condicion_kill(x, y, i, j):
-    restantes_x = len(x) - i
-    restantes_y = len(y) - j
-    if restantes_x > 0:
-        costo_insert_restantes = restantes_y * i
-        costo_kill = k + costo_insert_restantes
-        costo_replace_restantes = min(restantes_x, restantes_y) * r
-        return costo_kill < costo_replace_restantes
-    return False
-
 def terminal_inteligente(x, y):
     n = len(x)
     m = len(y)
@@ -56,9 +46,9 @@ def terminal_inteligente(x, y):
                     M[i-1][j] + d,
                     M[i][j-1] + i
                 )
-
-            if condicion_kill(x, y, i, j):
-                M[i][j] = min(M[i][j], M[i-1][j] + k + (m - j) * i)
+        #condicion para kill
+        if i > 1 and x[i-1] == y[j-2] and x[i-2] == y[j-1]:
+            M[i][j] = min(M[i][j], M[i-2][j-2] + k)
 
     print("Matriz de costos:")
     print(M)

@@ -1,6 +1,6 @@
 a = 1
 d = 2
-r = 3
+r = 2
 i = 2
 k = 1
 
@@ -76,8 +76,8 @@ def programacion_voraz(x, y):
     print("Secuencia de operaciones:")
     print(sol)
 
-x = "frances"
-y = "francec"
+x = "quien"
+y = "hola"
 programacion_voraz(x, y)
 
 x2 = "algorithm"

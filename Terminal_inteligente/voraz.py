@@ -72,18 +72,4 @@ def programacion_voraz(x, y):
         costo_total += i
         jj += 1
     
-    print(f"El costo total por programación voraz es: {costo_total}")
-    print("Secuencia de operaciones:")
-    print(sol)
-
-x = "quien"
-y = "hola"
-programacion_voraz(x, y)
-
-x2 = "algorithm"
-y2 = "altruistic"
-programacion_voraz(x2, y2,)
-
-x3 = "francesa"
-y3 = "ancestro"
-programacion_voraz(x3, y3)
+    return costo_total, sol

@@ -9,43 +9,47 @@ Laura Sofia Peñaloza
 Santiago Reyes Rodriguez
 """
 """
-    Calcula el valor óptimo de asignación de acciones para maximizar el beneficio del gobierno.
-    
-    Parámetros:
-    - A: número total de acciones a subastar.
-    - B: precio mínimo que el gobierno ofrece por las acciones sobrantes.
-    - ofertas: lista de tuplas (p_i, m_i, M_i), donde:
-        - p_i: precio que el oferente i está dispuesto a pagar por acción.
-        - m_i: número mínimo de acciones que el oferente i está dispuesto a comprar.
-        - M_i: número máximo de acciones que el oferente i está dispuesto a comprar.
-    
-    Retorna:
-    - Las asginaciones realizadas y el valor máximo posible para la asignación de las acciones 
-    """
+"""
 
-def subasta_optima(A, B, n, ofertas):
-    #arreglo para almacenar el valor máximo
-    dp = [0] * (A + 1)
-    # arreglo para almacenar las asignaciones
-    asignacion = [[0] * n for _ in range(A + 1)]
+import numpy as np
 
-    # Iterar sobre cada oferta
+def subasta_dp(A, B, n, ofertas):
+    
+    precios = np.array([oferta[0] for oferta in ofertas])
+    minimos = np.array([oferta[1] for oferta in ofertas])
+    maximos = np.array([oferta[2] for oferta in ofertas])
+
+
+    dp = np.zeros((n + 1, A + 1))
+
+    # Rellenar la matriz de programación dinámica
     for i in range(n):
-        p_i, m_i, M_i = ofertas[i]
-        # Iterar sobre la cantidad de acciones disponibles
-        for a in range(A, m_i - 1, -1):
-            # Evaluar cada posible asignación dentro del rango permitido
-            for x in range(m_i, min(M_i, a) + 1):
-                if dp[a] < dp[a - x] + p_i * x:
-                    dp[a] = dp[a - x] + p_i * x
-                    asignacion[a] = asignacion[a - x][:]
-                    asignacion[a][i] += x
+        dp[i + 1] = dp[i].copy()  # Copiar la fila anterior
 
-    #acciones asignadas al gobierno
-    acciones_gobierno = A - sum(asignacion[A])
-    
-    #agregar la asignación del gobierno al resultado final
-    if acciones_gobierno > 0:
-        asignacion[A].append(acciones_gobierno)
-    
-    return asignacion[A], dp[A]
+        # Solo considerar precios que sean mayores o iguales al umbral
+        if precios[i] >= B:
+            for x in range(minimos[i], min(maximos[i], A) + 1):
+                dp[i + 1, x:] = np.maximum(dp[i + 1, x:], dp[i, :-x] + x * precios[i])
+
+    # Recuperar la asignación óptima
+    acciones_restantes = A
+    mejor_asignacion = np.zeros(n + 1, dtype=int)
+
+    for i in range(n - 1, -1, -1):
+        if precios[i] < B:
+            continue
+        for x in range(minimos[i], min(maximos[i], acciones_restantes) + 1):
+            if acciones_restantes >= x and dp[i + 1][acciones_restantes] == dp[i][acciones_restantes - x] + x * precios[i]:
+                mejor_asignacion[i] = x
+                acciones_restantes -= x
+                break
+
+    # Si quedan acciones sin asignar, se asignan a la última oferta
+    if acciones_restantes > 0:
+        mejor_asignacion[n] = acciones_restantes
+
+   
+    valor_final = int(dp[n][A] + (ofertas[n][0] * mejor_asignacion[n]))
+    return valor_final, mejor_asignacion.tolist()
+
+

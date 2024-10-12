@@ -1,51 +1,51 @@
 import unittest
-from dinamica import subasta_optima
+from dinamica import subasta_dp
 
 class TestSubastaOptima(unittest.TestCase):
     def test_single_offer(self):
-        A = 10
-        B = 5
+        A = 1000
+        B = 100
         n = 1
-        ofertas = [(10, 1, 10)]
-        asignacion, max_beneficio = subasta_optima(A, B, n, ofertas)
-        self.assertEqual(asignacion, [10])
-        self.assertEqual(max_beneficio, 100)
+        ofertas = [(500, 100, 600), (100, 0, 1000)]
+        max_beneficio, asignacion = subasta_dp(A, B, n, ofertas)
+        self.assertEqual(asignacion, [600,400])
+        self.assertEqual(max_beneficio, 340000)
 
     def test_multiple_offers(self):
-        A = 10
-        B = 5
+        A = 1000
+        B = 100
         n = 2
-        ofertas = [(10, 1, 5), (8, 2, 6)]
-        asignacion, max_beneficio = subasta_optima(A, B, n, ofertas)
-        self.assertEqual(asignacion, [5, 5])
-        self.assertEqual(max_beneficio, 90)
+        ofertas = [(500,100, 600), (450, 400, 800), (100, 0, 1000)]
+        max_beneficio, asignacion = subasta_dp(A, B, n, ofertas)
+        self.assertEqual(asignacion, [600,400, 0])
+        self.assertEqual(max_beneficio, 480000)
 
     def test_no_offers(self):
-        A = 10
-        B = 5
+        A = 1000
+        B = 100
         n = 0
-        ofertas = []
-        asignacion, max_beneficio = subasta_optima(A, B, n, ofertas)
-        self.assertEqual(asignacion, [10])
-        self.assertEqual(max_beneficio, 50)
+        ofertas = [(100,0,1000)]
+        max_beneficio, asignacion = subasta_dp(A, B, n, ofertas)
+        self.assertEqual(asignacion, [1000])
+        self.assertEqual(max_beneficio, 100000)
 
     def test_partial_assignment(self):
-        A = 10
-        B = 5
+        A = 1000
+        B = 100
         n = 3
-        ofertas = [(10, 1, 3), (8, 2, 4), (7, 1, 2)]
-        asignacion, max_beneficio = subasta_optima(A, B, n, ofertas)
-        self.assertEqual(asignacion, [3, 4, 2, 1])
-        self.assertEqual(max_beneficio, 86)
+        ofertas = [(500, 100, 600), (450, 400, 800), (300,100,300), (100, 0, 1000)]
+        max_beneficio, asignacion = subasta_dp(A, B, n, ofertas)
+        self.assertEqual(asignacion, [600, 400, 0, 0])
+        self.assertEqual(max_beneficio,480000)
 
     def test_exact_assignment(self):
-        A = 15
-        B = 5
+        A = 1000
+        B = 100
         n = 3
-        ofertas = [(10, 5, 5), (8, 5, 5), (7, 5, 5)]
-        asignacion, max_beneficio = subasta_optima(A, B, n, ofertas)
-        self.assertEqual(asignacion, [5, 5, 5])
-        self.assertEqual(max_beneficio, 125)
+        ofertas = [(500, 400, 600), (100, 400, 800), (200, 100, 700), (100, 0, 1000)]
+        max_beneficio, asignacion = subasta_dp(A, B, n, ofertas)
+        self.assertEqual(asignacion, [600, 0, 400, 0])
+        self.assertEqual(max_beneficio, 380000)
 
 if __name__ == '__main__':
     unittest.main()

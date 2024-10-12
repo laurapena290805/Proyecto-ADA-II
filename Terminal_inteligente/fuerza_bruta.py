@@ -1,3 +1,4 @@
+"""
 a = 1
 d = 2
 r = 3
@@ -33,27 +34,14 @@ def fuerza_bruta(x, y):
 
     # Llamamos a la función recursiva desde el inicio con costo 0
     costo_minimo = explorar(0, 0, 0)
-    print(f"El costo mínimo por fuerza bruta verdadera es: {costo_minimo}")
 
-# Pruebas
-x = "ingenioso"
-y = "ingeniero"
-fuerza_bruta(x, y)
-
-x2 = "algorithm"
-y2 = "altruistic"
-fuerza_bruta(x2, y2)
-
-x3 = "francesa"
-y3 = "ancestro"
-fuerza_bruta(x3, y3)
-
-
+"""
 a = 1  # costo avanzar
 d = 2  # costo borrar
 r = 3  # costo reemplazar
 i = 2  # costo insertar
 k = 1  # costo kill
+
 
 def fuerza_bruta(x, y):
     n = len(x)
@@ -105,20 +93,5 @@ def fuerza_bruta(x, y):
     costo_minimo, operaciones_realizadas = explorar(0, 0, 0, [])
     
     # Mostramos el costo mínimo y las operaciones realizadas
-    print(f"El costo mínimo por fuerza bruta es: {costo_minimo}")
-    print("Operaciones realizadas:")
-    for operacion in operaciones_realizadas:
-        print(f"- {operacion}")
-
-# Pruebas
-x = "ingenioso"
-y = "ingeniero"
-fuerza_bruta(x, y)
-
-x2 = "algorithm"
-y2 = "altruistic"
-fuerza_bruta(x2, y2)
-
-x3 = "francesa"
-y3 = "ancestro"
-fuerza_bruta(x3, y3)
+    return costo_minimo, operaciones_realizadas
+   

@@ -50,9 +50,6 @@ def terminal_inteligente(x, y):
         if i > 1 and x[i-1] == y[j-2] and x[i-2] == y[j-1]:
             M[i][j] = min(M[i][j], M[i-2][j-2] + k)
 
-    print("Matriz de costos:")
-    print(M)
-    print("El costo mínimo es: ", M[n][m])
 
     i, j = n, m
     sol = []
@@ -87,13 +84,13 @@ def terminal_inteligente(x, y):
         j -= 1
 
     sol.reverse()
-    print("Secuencia de operaciones:")
-    print(sol)
+    return sol, M[0][0]
 
-x = "ingenioso"
-y = "ingeniero"
-terminal_inteligente(x, y)
+if __name__ == '__main__':
+    x = "ingenioso"
+    y = "ingeniero"
+    terminal_inteligente(x, y)
 
-x2 = "algorithm"
-y2 = "altruistic"
-terminal_inteligente(x2, y2)
+    x2 = "algorithm"
+    y2 = "altruistic"
+    terminal_inteligente(x2, y2)

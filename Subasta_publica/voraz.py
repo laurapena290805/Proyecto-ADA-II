@@ -1,28 +1,27 @@
+import numpy as np
+
 def subasta_voraz(A, B, n, ofertas):
-    precios = [oferta[0] for oferta in ofertas]
-    minimos = [oferta[1] for oferta in ofertas]
-    maximos = [oferta[2] for oferta in ofertas]
+    ofertas_validas = [(i, oferta) for i, oferta in enumerate(ofertas) if oferta[0] >= B]
+    ofertas_validas.sort(key=lambda x: x[1][0], reverse=True)  
 
-    mejor_asignacion = [0] * n
-
-    ofertas_ordenadas = sorted([(i, precios[i], minimos[i], maximos[i]) for i in range(n) if precios[i] >= B], key=lambda x: -x[1])
-
-    acciones_restantes = A
+    asignacion_optima = np.zeros(n + 1, dtype=int) 
     valor_total = 0
-
-    for oferta in ofertas_ordenadas:
-        idx, precio, minimo, maximo = oferta
-
-        if acciones_restantes >= minimo:  
-            asignar = min(maximo, acciones_restantes)
-
-            if asignar >= minimo:
-                mejor_asignacion[idx] = asignar
-                valor_total += asignar * precio
-                acciones_restantes -= asignar
+    acciones_restantes = A  
+    for indice, oferta in ofertas_validas:
+        precio, minimo, maximo = oferta  
 
         if acciones_restantes <= 0:
             break
 
+       
+        cantidad_asignar = min(maximo, acciones_restantes)
+      
 
-    return valor_total, mejor_asignacion
+        if cantidad_asignar < minimo:
+            continue
+
+        asignacion_optima[indice] = cantidad_asignar
+        valor_total += cantidad_asignar * precio
+        acciones_restantes -= cantidad_asignar
+
+    return asignacion_optima, valor_total

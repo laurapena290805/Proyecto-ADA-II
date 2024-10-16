@@ -24,5 +24,5 @@ def subasta_voraz(A, B, n, ofertas):
         if acciones_restantes <= 0:
             break
 
-    return valor_total, mejor_asignacion
 
+    return valor_total, mejor_asignacion

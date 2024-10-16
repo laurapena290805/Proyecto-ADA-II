@@ -25,3 +25,4 @@ def subasta_voraz(A, B, n, ofertas):
             break
 
     return valor_total, mejor_asignacion
+

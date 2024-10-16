@@ -17,11 +17,13 @@ def tiempo_ejecucion(funcion, args):
 
 
 casos = [
-    ("A", "B"),
-    ("AC", "AB"),
-    ("Hola", "ola"),
-    ("juan", "julian"),
-    ("abdta", "abcta"),
+    ("Ay", "Ya"),
+    ("Pal", "Pup"),
+    ("Mora", "More"),
+    ("Agua", "Vaca"),
+    ("Destino", "Caminos"),
+    ("francesa", "ancestro"),
+    ("ingenioso", "ingeniero"),
 ]
 
 tiempos = [[], [], []]

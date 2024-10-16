@@ -25,3 +25,4 @@ def subasta_fuerza_bruta(A, B, n, ofertas):
     probar_combinacion(0, A, 0, [0] * n)
 
     return mejor_valor, mejor_asignacion
+

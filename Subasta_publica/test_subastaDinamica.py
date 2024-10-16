@@ -47,5 +47,14 @@ class TestSubastaOptima(unittest.TestCase):
         self.assertEqual(asignacion, [600, 0, 400, 0])
         self.assertEqual(max_beneficio, 380000)
 
+    def test_no_assignment(self):
+        A = 1000
+        B = 100
+        n = 4
+        ofertas = [(500, 100, 600), (450, 400, 800), (300, 100, 300), (200, 100, 700), (100, 0, 1000)]
+        max_beneficio, asignacion = subasta_dp(A, B, n, ofertas)
+        self.assertEqual(asignacion, [600, 400, 0, 0, 0])
+        self.assertEqual(max_beneficio, 480000)
+        
 if __name__ == '__main__':
     unittest.main()

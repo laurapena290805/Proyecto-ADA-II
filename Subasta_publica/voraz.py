@@ -25,3 +25,4 @@ def subasta_voraz(A, B, n, ofertas):
         acciones_restantes -= cantidad_asignar
 
     return asignacion_optima, valor_total
+

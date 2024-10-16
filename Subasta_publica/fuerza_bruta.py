@@ -4,7 +4,7 @@ def subasta_fuerza_bruta(A, B, n, ofertas):
     maximos = [oferta[2] for oferta in ofertas]
 
     mejor_valor = 0
-    mejor_asignacion = [0] * n
+    mejor_asignacion = [0] * n 
 
     def probar_combinacion(i, acciones_restantes, valor_actual, asignacion_actual):
         nonlocal mejor_valor, mejor_asignacion
@@ -25,4 +25,6 @@ def subasta_fuerza_bruta(A, B, n, ofertas):
     probar_combinacion(0, A, 0, [0] * n)
 
     return mejor_valor, mejor_asignacion
+
+
 

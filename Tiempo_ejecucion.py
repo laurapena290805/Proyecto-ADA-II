@@ -7,6 +7,7 @@ from Terminal_inteligente.fuerza_bruta import fuerza_bruta
 from Terminal_inteligente.voraz import programacion_voraz
 from Subasta_publica.dinamica import subasta_dp
 from Subasta_publica.voraz import subasta_voraz
+from Subasta_publica.fuerza_bruta import subasta_fuerza_bruta
 
 def tiempo_ejecucion(funcion, args):
     array = np.zeros(50)
@@ -74,14 +75,17 @@ def tiempo_subasta():
     for caso in casos:
         result_dinamica = tiempo_ejecucion(subasta_dp, caso)
         result_voraz = tiempo_ejecucion(subasta_voraz, caso)
+        result_fuerza_bruta = tiempo_ejecucion(subasta_fuerza_bruta, caso)
+
 
         tiempos[0].append(result_dinamica)
         tiempos[1].append(result_voraz)
+        tiempos[2].append(result_fuerza_bruta)
 
     graficar(tiempos)
-    guardar_tiempos(tiempos, ["Subasta_dinamica", "Subasta_voraz"])
+    guardar_tiempos(tiempos, ["Subasta_dinamica", "Subasta_voraz", "Subasta_fuerza_bruta"])
   
 if __name__ == "__main__":
     tiempos_terminal_inteligente()
-    ##tiempo_subasta()
+    tiempo_subasta()
 

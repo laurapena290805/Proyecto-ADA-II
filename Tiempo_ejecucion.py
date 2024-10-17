@@ -74,13 +74,15 @@ def tiempo_subasta():
 
     for caso in casos:
         result_dinamica = tiempo_ejecucion(subasta_dp, caso)
-        result_voraz = tiempo_ejecucion(subasta_voraz, caso)
         result_fuerza_bruta = tiempo_ejecucion(subasta_fuerza_bruta, caso)
+        result_voraz = tiempo_ejecucion(subasta_voraz, caso)
+       
 
 
         tiempos[0].append(result_dinamica)
-        tiempos[1].append(result_voraz)
         tiempos[2].append(result_fuerza_bruta)
+        tiempos[1].append(result_voraz)
+        
 
     graficar(tiempos)
     guardar_tiempos(tiempos, ["Subasta_dinamica", "Subasta_voraz", "Subasta_fuerza_bruta"])

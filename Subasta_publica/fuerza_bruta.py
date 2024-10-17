@@ -1,61 +1,40 @@
 def subasta_fuerza_bruta(A, B, n, ofertas):
-    # Función auxiliar para calcular el valor total de una asignación
-    def calcular_valor(asignacion):
-        valor_total = 0
-        acciones_restantes = A
+    # Crear listas de precios, mínimos y máximos para cada oferta (incluyendo la oferta del gobierno)
+    precios = [oferta[0] for oferta in ofertas]
+    minimos = [oferta[1] for oferta in ofertas]
+    maximos = [oferta[2] for oferta in ofertas]
+    
+    # Variable para almacenar el mejor valor total y la mejor asignación
+    mejor_valor = 0
+    mejor_asignacion = [0] * (n + 1)  # Incluyendo la oferta del gobierno
 
-        # Iteramos sobre las ofertas
-        for i in range(n):
-            if ofertas[i][0] >= B:  # Solo considerar ofertas que cumplen con el umbral de precio
-                valor_total += asignacion[i] * ofertas[i][0]  # oferta[i][0] es el precio
-                acciones_restantes -= asignacion[i]  # Restar las acciones asignadas
+    # Función recursiva para probar todas las combinaciones posibles
+    def probar_combinacion(i, acciones_restantes, valor_actual, asignacion_actual):
+        nonlocal mejor_valor, mejor_asignacion
 
-        # Asignar las acciones restantes a la oferta del gobierno
-        valor_total += ofertas[n][0] * acciones_restantes  # oferta[n][0] es el precio del gobierno
-        
-        return valor_total
-
-    # Variables para almacenar la mejor asignación y valor
-    mejor_asignacion = None
-    mejor_valor_total = 0
-
-    # Función recursiva para generar combinaciones
-    def combinar(i, acciones_restantes, asignacion_actual):
-        nonlocal mejor_asignacion, mejor_valor_total
-        if i == n:  # Si llegamos al final de las ofertas
-            asignacion_actual[i] = acciones_restantes  # Asignamos las acciones restantes al gobierno
-            valor_total = calcular_valor(asignacion_actual)
-            if valor_total > mejor_valor_total:
-                mejor_valor_total = valor_total
+        # Si hemos considerado todas las ofertas (menos la del gobierno)
+        if i == n:
+            # Asignar todas las acciones restantes a la oferta del gobierno
+            asignacion_actual[-1] = acciones_restantes
+            valor_actual += acciones_restantes * precios[-1]  # Precio de la oferta del gobierno
+            
+            # Actualizamos el mejor valor si el valor actual es mayor
+            if valor_actual > mejor_valor:
+                mejor_valor = valor_actual
                 mejor_asignacion = asignacion_actual[:]
             return
 
-        # Si la oferta no cumple el umbral, saltamos a la siguiente
-        if ofertas[i][0] < B:  # ofertas[i][0] es el precio de la oferta
-            combinar(i + 1, acciones_restantes, asignacion_actual)
-            return
+        # Caso en que no se asignan acciones a la oferta actual
+        probar_combinacion(i + 1, acciones_restantes, valor_actual, asignacion_actual)
 
-        min_acciones = ofertas[i][1]  # ofertas[i][1] es el mínimo de acciones
-        max_acciones = min(ofertas[i][2], acciones_restantes)  # ofertas[i][2] es el máximo de acciones
-        
-        # Probar todas las posibles asignaciones de acciones para la oferta actual
-        for x in range(min_acciones, max_acciones + 1):
+        # Caso en que se asignan acciones a la oferta actual (de minimos[i] a maximos[i])
+        for x in range(minimos[i], min(maximos[i], acciones_restantes) + 1):
             asignacion_actual[i] = x
-            combinar(i + 1, acciones_restantes - x, asignacion_actual)
-        
-        asignacion_actual[i] = 0  # Resetear la asignación actual
-        combinar(i + 1, acciones_restantes, asignacion_actual)
+            nuevo_valor = valor_actual + x * precios[i]
+            probar_combinacion(i + 1, acciones_restantes - x, nuevo_valor, asignacion_actual)
+            asignacion_actual[i] = 0  # Deshacer la asignación después de probar
 
-    # Inicialización con un espacio extra para la oferta del gobierno
-    combinar(0, A, [0] * (n + 1))
+    # Llamada inicial a la función recursiva
+    probar_combinacion(0, A, 0, [0] * (n + 1))
 
-    # Si no encontramos una mejor asignación, usar la asignación inicial (que es todo 0)
-    if mejor_asignacion is None:
-        mejor_asignacion = [0] * (n + 1)
-
-    # Calcular el valor total de la mejor asignación encontrada
-    total = calcular_valor(mejor_asignacion)
-
-    return mejor_asignacion, total
-
-
+    return mejor_asignacion, mejor_valor

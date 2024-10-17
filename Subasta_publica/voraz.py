@@ -7,6 +7,7 @@ def subasta_voraz(A, B, n, ofertas):
     asignacion_optima = np.zeros(n + 1, dtype=int) 
     valor_total = 0
     acciones_restantes = A  
+    
     for indice, oferta in ofertas_validas:
         precio, minimo, maximo = oferta  
 

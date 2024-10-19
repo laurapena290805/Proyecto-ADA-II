@@ -38,8 +38,6 @@ def graficar_interpolacion(x, y, nombre_grafica="Interpolación"):
 
 # Ejecutar para cada conjunto de datos
 
-
-
 def graficar_terminal_interpolacion():
 
     ruta_datos = [
@@ -53,4 +51,17 @@ def graficar_terminal_interpolacion():
         graficar_interpolacion(costos_teoricos, tiempos, nombre_grafica=ruta[2])
 
 def graficar_subasta_interpolacion():
-    pass
+    ruta_datos = [
+        ('subasta_teorico_dinamica', 'subasta_dinamica' , 'interpolacion_subasta_dinamica'),
+        ('subasta_teorico_fuerza_bruta', 'subasta_fuerza_bruta', 'interpolacion_subasta_fuerza_bruta'),
+        ('subasta_teorico_voraz', 'subasta_voraz', 'interpolacion_subasta_voraz'),
+    ]
+    for ruta in ruta_datos:
+        costos_teoricos = leer_archivo_array(ruta[0])
+        tiempos = leer_archivo_array(ruta[1])
+        graficar_interpolacion(costos_teoricos, tiempos, nombre_grafica=ruta[2])
+
+graficar_subasta_interpolacion()
+
+
+    

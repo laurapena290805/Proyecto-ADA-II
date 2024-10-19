@@ -13,18 +13,8 @@ def run_subasta():
     B = data['B']
     n = data['n']
     ofertas = data['ofertas']
-    algoritmoSelec = data['algoritmo']
-
-    if algoritmoSelec == 'fuerza_bruta':
-        valor_final, mejor_asignacion = subasta_fuerza_bruta(A, B, n, ofertas)
-    elif algoritmoSelec == 'dinamica':
-        valor_final, mejor_asignacion = subasta_dp(A, B, n, ofertas)
-    elif algoritmoSelec == 'voraz':
-        valor_final, mejor_asignacion = subasta_voraz(A, B, n, ofertas)
-    else:
-        return jsonify({
-            'error': 'Algoritmo no válido'
-        }), 400
+    
+    valor_final, mejor_asignacion = subasta_dp(A, B, n, ofertas)
     
     return jsonify({
         'valor_final': valor_final,

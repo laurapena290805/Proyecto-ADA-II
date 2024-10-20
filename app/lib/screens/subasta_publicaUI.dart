@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'dart:io';
-
 import 'package:app/utils/app_styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,9 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
   String subtitulo = 'Asignaciones de Acciones';
   String hoveredButton = '';
   String pressButton = '';
+
+  // Variable para almacenar el algoritmo seleccionado
+  String algoritmoSeleccionado = 'dinamica'; // Por defecto es Dinámica
 
   // Controladores de texto
   final TextEditingController aController = TextEditingController();
@@ -48,6 +50,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
 
       // Escuchar la salida del proceso para depurar
       _pythonProcess!.stdout.transform(utf8.decoder).listen((data) {
+        print("Si se encendio");
         print(data);
       });
     } catch (e) {
@@ -195,16 +198,20 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
         _buildBotonSolucion('Dinámica', Icons.analytics, () {
           setState(() {
             titulo = 'Método Dinámico';
+            algoritmoSeleccionado =
+                'dinamica'; // Selecciona el algoritmo Dinámica
           });
         }),
         _buildBotonSolucion('Fuerza Bruta', Icons.memory, () {
           setState(() {
             titulo = 'Método Fuerza Bruta';
+            algoritmoSeleccionado = 'fuerza_bruta'; // Selecciona Fuerza Bruta
           });
         }),
         _buildBotonSolucion('Voraz', Icons.flash_on, () {
           setState(() {
             titulo = 'Método Voraz';
+            algoritmoSeleccionado = 'voraz'; // Selecciona Voraz
           });
         }),
       ],
@@ -296,7 +303,14 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
                   child: const Text('Ejecutar Algoritmo'),
                 ),
               const SizedBox(height: 16),
-              Text(resultado, style: const TextStyle(fontSize: 18)),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Text(
+                    resultado,
+                    style: AppStyles.infomationTextStyle,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -304,14 +318,23 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
     );
   }
 
-  Widget _buildInputField(TextEditingController controller, String label) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(labelText: label),
-      keyboardType: TextInputType.number,
+  // Crea campos de entrada para los datos
+  Widget _buildInputField(TextEditingController controller, String labelText) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
     );
   }
 
+  // Función para ejecutar el algoritmo en el servidor
   Future<void> _runSubasta() async {
     setState(() {
       isLoading = true;
@@ -320,22 +343,23 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/subasta'),
+        Uri.parse('http://127.0.0.1:5000/run_algorithm'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'A': int.parse(aController.text),
           'B': int.parse(bController.text),
           'n': int.parse(nController.text),
-          'ofertas': json.decode(ofertasController
-              .text), // Asegúrate de que la entrada esté en el formato correcto
+          'ofertas': json
+              .decode(ofertasController.text), // Ofertas en formato correcto
+          'algoritmo': algoritmoSeleccionado // Algoritmo seleccionado
         }),
       );
-
+      print(response.statusCode);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
           resultado =
-              'Valor final: ${data['valor_final']}\nMejor asignación: ${data['mejor_asignacion']}';
+              'Valor final: ${data['resultado']}\nMejor asignación: ${data['asignacion']}';
         });
       } else {
         setState(() {

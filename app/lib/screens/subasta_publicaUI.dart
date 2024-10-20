@@ -50,7 +50,6 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
 
       // Escuchar la salida del proceso para depurar
       _pythonProcess!.stdout.transform(utf8.decoder).listen((data) {
-        print("Si se encendio");
         print(data);
       });
     } catch (e) {
@@ -278,13 +277,13 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
           child: Column(
             children: [
               Text(
-                'Método Dinámico',
+                titulo,
                 style: AppStyles.titleTextStyle.copyWith(fontSize: 20),
               ),
               const SizedBox(height: 16),
-              _buildInputField(aController, 'Ingrese A'),
-              _buildInputField(bController, 'Ingrese B'),
-              _buildInputField(nController, 'Ingrese n'),
+              _buildInputField(aController, 'Ingrese A (int)'),
+              _buildInputField(bController, 'Ingrese B (int)'),
+              _buildInputField(nController, 'Ingrese n (int)'),
               _buildInputField(ofertasController,
                   'Ingrese ofertas (ej: [[precio1, minimo1, maximo1], ...])'),
               const SizedBox(height: 16),
@@ -307,7 +306,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
                 child: SingleChildScrollView(
                   child: Text(
                     resultado,
-                    style: AppStyles.infomationTextStyle,
+                    style: AppStyles.titleTextStyle,
                   ),
                 ),
               ),
@@ -321,6 +320,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
   // Crea campos de entrada para los datos
   Widget _buildInputField(TextEditingController controller, String labelText) {
     return Padding(
+      //La distancia de la caja de texto es de izquierda hasta la mitad del contenedor
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
         controller: controller,
@@ -355,11 +355,11 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
         }),
       );
       print(response.statusCode);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200) { 
         final data = json.decode(response.body);
         setState(() {
           resultado =
-              'Valor final: ${data['resultado']}\nMejor asignación: ${data['asignacion']}';
+              'La mejor asignación es: ${data['resultado']}\nValor Final: ${data['asignacion']}';
         });
       } else {
         setState(() {

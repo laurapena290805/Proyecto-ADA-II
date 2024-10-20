@@ -21,7 +21,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
   String pressButton = '';
 
   // Variable para almacenar el algoritmo seleccionado
-  String algoritmoSeleccionado = 'dinamica'; // Por defecto es Dinámica
+  String algoritmoSeleccionado = '';
 
   // Controladores de texto
   final TextEditingController aController = TextEditingController();
@@ -227,25 +227,35 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
         hoveredButton = ''; // Resetea cuando el mouse sale del botón
       }),
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          setState(() {
+            pressButton = texto; // Actualiza el botón seleccionado
+          });
+          onTap(); // Llama a la función original
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
           child: Row(
             children: [
               Icon(
                 icono,
-                color: hoveredButton == texto
-                    ? Colors.amber
-                    : AppStyles.primaryColor, // Cambia el color en hover
+                color: pressButton == texto
+                    ? Colors.green // Cambia el color si está seleccionado
+                    : (hoveredButton == texto
+                        ? Colors.amber
+                        : AppStyles.primaryColor),
               ),
               const SizedBox(width: 8),
               Text(
                 texto,
                 style: TextStyle(
                   fontSize: 16,
-                  color: hoveredButton == texto
-                      ? AppStyles.primaryColor
-                      : Colors.black, // Cambia el color del texto en hover
+                  color: pressButton == texto
+                      ? Colors
+                          .green // Cambia el color del texto si está seleccionado
+                      : (hoveredButton == texto
+                          ? AppStyles.primaryColor
+                          : Colors.black),
                 ),
               ),
             ],
@@ -355,7 +365,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
         }),
       );
       print(response.statusCode);
-      if (response.statusCode == 200) { 
+      if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
           resultado =

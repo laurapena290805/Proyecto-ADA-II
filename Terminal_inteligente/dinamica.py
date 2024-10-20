@@ -20,13 +20,7 @@ Santiago Reyes Rodriguez
 
 import numpy as np
 
-a = 1
-d = 2
-r = 3
-i = 2
-k = 1
-
-def terminal_inteligente(x, y):
+def terminal_dinamica(a,d,r,i,k,x, y):
     n = len(x)
     m = len(y)
     M = np.zeros((n+1, m+1), dtype=int)
@@ -85,12 +79,3 @@ def terminal_inteligente(x, y):
 
     sol.reverse()
     return sol, M[0][0]
-
-if __name__ == '__main__':
-    x = "ingenioso"
-    y = "ingeniero"
-    terminal_inteligente(x, y)
-
-    x2 = "algorithm"
-    y2 = "altruistic"
-    terminal_inteligente(x2, y2)

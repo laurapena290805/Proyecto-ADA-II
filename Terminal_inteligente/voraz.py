@@ -4,7 +4,7 @@ r = 2
 i = 2
 k = 1
 
-def programacion_voraz(x, y):
+def terminal_voraz(a,d,r,i,k,x, y):
     n = len(x)
     m = len(y)
     

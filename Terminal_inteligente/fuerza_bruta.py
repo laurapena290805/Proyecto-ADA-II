@@ -35,15 +35,15 @@ def fuerza_bruta(x, y):
     # Llamamos a la función recursiva desde el inicio con costo 0
     costo_minimo = explorar(0, 0, 0)
 
-"""
+
 a = 1  # costo avanzar
 d = 2  # costo borrar
 r = 3  # costo reemplazar
 i = 2  # costo insertar
 k = 1  # costo kill
+"""
 
-
-def fuerza_bruta(x, y):
+def terminal_fuerza_bruta(a,d,r,i,k,x, y):
     n = len(x)
     m = len(y)
 

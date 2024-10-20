@@ -1,6 +1,7 @@
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 from Terminal_inteligente.dinamica import terminal_inteligente
 from Terminal_inteligente.fuerza_bruta import fuerza_bruta
@@ -78,6 +79,7 @@ def tiempo_subasta():
         (100, 10, 4, [(50, 10, 60), (45, 40, 80), (30, 10, 30), (20, 10, 70), (10, 0, 100)]),
         ]
     
+    costos_teoricos = [[], [], []]
     tiempos = [[], [], []]
 
     for caso in casos:
@@ -90,11 +92,17 @@ def tiempo_subasta():
         tiempos[1].append(result_fuerza_bruta)
         tiempos[2].append(result_voraz)
         
+        A, n = caso[0], caso[2]
+        costos_teoricos[0].append(n + A**2)
+        costos_teoricos[1].append(A**n)
+        costos_teoricos[2].append((n * math.log(n))if n > 1 else n)
 
     graficar(tiempos, "Subasta")
     guardar_archivos(tiempos, ["Subasta_dinamica", "Subasta_voraz", "Subasta_fuerza_bruta"])
+    guardar_archivos(costos_teoricos, ["Subasta_teorico_dinamica", "Subasta_teorico_voraz", "Subasta_teorico_fuerza_bruta"])
 
 if __name__ == "__main__":
     tiempos_terminal_inteligente()
     tiempo_subasta()
+
 

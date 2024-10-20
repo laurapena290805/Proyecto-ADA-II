@@ -17,40 +17,42 @@ Santiago Reyes Rodriguez
 #kill               k
 
 ### ESTRATEGIA DE PROGRAMACIÓN DINAMICA
-
 import numpy as np
 
-a = 1
-d = 2
-r = 3
-i = 2
-k = 1
+# Parámetros de costo
+a = 1  # Avance (sin costo de cambio)
+d = 2  # Costo de eliminación
+r = 3  # Costo de reemplazo
+ins = 2  # Costo de inserción
+k = 1  # Costo de Kill
 
 def terminal_inteligente(x, y):
     n = len(x)
     m = len(y)
     M = np.zeros((n+1, m+1), dtype=int)
 
+    # Inicialización de la primera fila y columna
     for i in range(n + 1):
-        M[i][0] = i * k
+        M[i][0] = i * d  # Costo de eliminar todos los caracteres
     for j in range(m + 1):
-        M[0][j] = j * i
+        M[0][j] = j * ins  # Costo de insertar todos los caracteres
 
+    # Llenado de la matriz M con los costos
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             if x[i-1] == y[j-1]:
-                M[i][j] = M[i-1][j-1] + a
+                M[i][j] = M[i-1][j-1] + a  # Avance sin costo
             else:
                 M[i][j] = min(
-                    M[i-1][j-1] + r,
-                    M[i-1][j] + d,
-                    M[i][j-1] + i
+                    M[i-1][j-1] + r,   # Reemplazo
+                    M[i-1][j] + d,     # Eliminación
+                    M[i][j-1] + ins    # Inserción
                 )
-        #condicion para kill
+        # Condición para Kill (intercambio de dos caracteres consecutivos)
         if i > 1 and x[i-1] == y[j-2] and x[i-2] == y[j-1]:
             M[i][j] = min(M[i][j], M[i-2][j-2] + k)
 
-
+    # Trazado del camino de las operaciones
     i, j = n, m
     sol = []
     while i > 0 and j > 0:
@@ -66,7 +68,7 @@ def terminal_inteligente(x, y):
             elif M[i][j] == M[i-1][j] + d:
                 sol.append("Delete")
                 i -= 1
-            elif M[i][j] == M[i][j-1] + i:
+            elif M[i][j] == M[i][j-1] + ins:
                 sol.append("Insert")
                 j -= 1
             else:
@@ -84,13 +86,5 @@ def terminal_inteligente(x, y):
         j -= 1
 
     sol.reverse()
-    return sol, M[0][0]
+    return sol, M[n][m]  # Devuelve el costo final desde M[n][m]
 
-if __name__ == '__main__':
-    x = "ingenioso"
-    y = "ingeniero"
-    terminal_inteligente(x, y)
-
-    x2 = "algorithm"
-    y2 = "altruistic"
-    terminal_inteligente(x2, y2)

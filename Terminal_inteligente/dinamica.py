@@ -19,18 +19,7 @@ Santiago Reyes Rodriguez
 ### ESTRATEGIA DE PROGRAMACIÓN DINAMICA
 import numpy as np
 
-<<<<<<< HEAD
 def terminal_dinamica(a,d,r,i,k,x, y):
-=======
-# Parámetros de costo
-a = 1  # Avance (sin costo de cambio)
-d = 2  # Costo de eliminación
-r = 3  # Costo de reemplazo
-ins = 2  # Costo de inserción
-k = 1  # Costo de Kill
-
-def terminal_inteligente(x, y):
->>>>>>> a6b4e20a7a87828bedba1ee4e0ec2ce46c4dba28
     n = len(x)
     m = len(y)
     M = np.zeros((n+1, m+1), dtype=int)

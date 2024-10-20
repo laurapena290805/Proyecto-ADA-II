@@ -362,7 +362,7 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/run_algorithmT'),
+        Uri.parse('http://127.0.0.1:5001/run_algorithmT'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'A': int.parse(aController.text),
@@ -375,8 +375,7 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
           'algoritmo': algoritmoSeleccionado
         }),
       );
-      print(aController.text);
-      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {

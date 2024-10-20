@@ -1,8 +1,3 @@
-a = 1
-d = 2
-r = 2
-i = 2
-k = 1
 
 def terminal_voraz(a,d,r,i,k,x, y):
     n = len(x)
@@ -73,3 +68,4 @@ def terminal_voraz(a,d,r,i,k,x, y):
         jj += 1
     
     return costo_total, sol
+

@@ -19,7 +19,7 @@ Santiago Reyes Rodriguez
 ### ESTRATEGIA DE PROGRAMACIÓN DINAMICA
 import numpy as np
 
-def terminal_dinamica(a,d,r,i,k,x, y):
+def terminal_dinamica(a,d,r,ins,k,x, y):
     n = len(x)
     m = len(y)
     M = np.zeros((n+1, m+1), dtype=int)
@@ -79,5 +79,6 @@ def terminal_dinamica(a,d,r,i,k,x, y):
         j -= 1
 
     sol.reverse()
-    return sol, M[n][m]  # Devuelve el costo final desde M[n][m]
+    val = M[n][m].item() # Costo final
+    return val, sol # Devuelve el costo final desde M[n][m]
 

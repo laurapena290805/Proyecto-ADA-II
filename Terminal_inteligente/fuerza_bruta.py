@@ -1,10 +1,5 @@
-"""
-a = 1
-d = 2
-r = 3
-i = 2
-k = 1
 
+<<<<<<< HEAD
 def fuerza_bruta(x, y):
     n = len(x)
     m = len(y)
@@ -36,6 +31,8 @@ def fuerza_bruta(x, y):
     costo_minimo = explorar(0, 0, 0)
 
 
+=======
+>>>>>>> a6b4e20a7a87828bedba1ee4e0ec2ce46c4dba28
 a = 1  # costo avanzar
 d = 2  # costo borrar
 r = 3  # costo reemplazar
@@ -94,4 +91,4 @@ def terminal_fuerza_bruta(a,d,r,i,k,x, y):
     
     # Mostramos el costo mínimo y las operaciones realizadas
     return costo_minimo, operaciones_realizadas
-   
+

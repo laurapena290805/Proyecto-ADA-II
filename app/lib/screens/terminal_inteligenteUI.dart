@@ -47,7 +47,7 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
   Future<void> _startPythonServer() async {
     try {
       String pythonScriptPath =
-          'C:/Users/santi/OneDrive/Documentos/Proyecto-ADA-II/app/lib/algorithms/Terminal_inteligente/app.py';
+          'C:/Users/santi/OneDrive/Documentos/Proyecto-ADA-II/Terminal_inteligente/app.py';
       _pythonProcess = await Process.start('python', [pythonScriptPath]);
       print('Servidor Python iniciado');
 
@@ -299,6 +299,7 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
               _buildInputField(rController, 'Costo de Reemplazar (int)'),
               _buildInputField(iController, 'Costo de Insertar (int)'),
               _buildInputField(kController, 'Costo de Eliminar (int)'),
+              const SizedBox(height: 16),
               _buildInputField(cadenaXController, 'Cadena X (str)'),
               _buildInputField(cadenaYController, 'Cadena Y (str)'),
               const SizedBox(height: 16),

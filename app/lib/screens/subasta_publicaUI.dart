@@ -44,7 +44,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
   Future<void> _startPythonServer() async {
     try {
       String pythonScriptPath =
-          'C:/Users/santi/OneDrive/Documentos/Proyecto-ADA-II/Subasta_publica/app.py';
+          'C:/Users/santi/OneDrive/Documentos/Proyecto-ADA-II/app/lib/algorithms/Subasta_publica/app.py';
       _pythonProcess = await Process.start('python', [pythonScriptPath]);
       print('Servidor Python iniciado');
 

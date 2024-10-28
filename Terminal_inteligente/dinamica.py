@@ -81,4 +81,3 @@ def terminal_dinamica(a,d,r,ins,k,x, y):
     sol.reverse()
     val = M[n][m].item() # Costo final
     return val, sol # Devuelve el costo final desde M[n][m]
-

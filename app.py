@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from Subasta_publica.dinamica import subasta_dp
 from Subasta_publica.fuerza_bruta import subasta_fuerza_bruta
@@ -11,6 +12,8 @@ from Terminal_inteligente.voraz import terminal_voraz
 
 app = Flask(__name__)
 
+# Permitir CORS de todos los dominios
+CORS(app)
 
 @app.route('/')
 def index():
@@ -18,7 +21,7 @@ def index():
 
 
 
-@app.route('/run_algorithm', methods=['POST'])
+@app.route('/subasta', methods=['POST'])
 def run_algorithm():
     data = request.json
     A = data['A']
@@ -42,9 +45,10 @@ def run_algorithm():
 
 
 
-@app.route('/run_algorithmT', methods=['POST'])
+@app.route('/terminal', methods=['POST'])
 def run_algorithmT():
     data = request.json
+    print(data)
     A = data['A']
     D = data['D']
     R = data['R']

@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:io';
 import 'package:app/utils/app_styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -35,53 +34,6 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
 
   // Almacena el resultado
   String resultado = '';
-
-  Process? _pythonProcess; // Variable para almacenar el proceso del servidor
-
-  @override
-  void initState() {
-    super.initState();
-    _startPythonServer();
-  }
-
-  Future<void> _startPythonServer() async {
-    try {
-      String pythonScriptPath =
-          'C:/Users/santi/OneDrive/Documentos/Proyecto-ADA-II/Terminal_inteligente/app.py';
-      _pythonProcess = await Process.start('python', [pythonScriptPath]);
-      print('Servidor Python iniciado');
-
-      // Escuchar la salida del proceso para depurar
-      _pythonProcess!.stdout.transform(utf8.decoder).listen((data) {
-        print(data);
-      });
-    } catch (e) {
-      print('Error al iniciar el servidor: $e');
-    }
-  }
-
-  @override
-  void dispose() {
-    if (kDebugMode) {
-      print('dispose() llamado');
-    } // Para verificar si se llama
-    _stopPythonServer();
-    super.dispose();
-  }
-
-  Future<void> _stopPythonServer() async {
-    if (_pythonProcess != null) {
-      // Intenta cerrar el proceso
-      _pythonProcess!.kill();
-
-      // Espera un poco para asegurarte de que el proceso se cierre
-      await Future.delayed(
-          const Duration(seconds: 1)); // Ajusta el tiempo si es necesario
-
-      // Verifica si el proceso sigue corriendo
-      print('Servidor cerrado.');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +314,7 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5001/run_algorithmT'),
+        Uri.parse('http://127.0.0.1:5000/run_algorithmT'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'A': int.parse(aController.text),

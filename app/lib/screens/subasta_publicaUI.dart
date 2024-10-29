@@ -309,7 +309,7 @@ class _SubastaPublicaUIState extends State<SubastaPublicaUI> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/run_algorithm'),
+        Uri.parse('http://127.0.0.1:5000/subasta'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'A': int.parse(aController.text),

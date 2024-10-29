@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:app/utils/app_styles.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -312,10 +311,13 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
       resultado = ''; // Reiniciar resultado
     });
 
-    try {
+    try {   
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/run_algorithmT'),
-        headers: {'Content-Type': 'application/json'},
+        Uri.parse('http://127.0.0.1:5000/terminal'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
         body: json.encode({
           'A': int.parse(aController.text),
           'D': int.parse(dController.text),
@@ -327,7 +329,6 @@ class _TerminalInteligenteUIState extends State<TerminalInteligenteUI> {
           'algoritmo': algoritmoSeleccionado
         }),
       );
-      print(response.body);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {

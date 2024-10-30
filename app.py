@@ -1,3 +1,4 @@
+import webbrowser
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -10,14 +11,14 @@ from Terminal_inteligente.voraz import terminal_voraz
 
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='web', static_url_path='/')
 
 # Permitir CORS de todos los dominios
 CORS(app)
 
 @app.route('/')
 def index():
-    return 'API para subasta pública y terminal inteligente'
+    return  app.send_static_file('index.html')
 
 
 

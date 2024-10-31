@@ -116,8 +116,23 @@ def terminal_inteligente(x, y):
         ii += 1
     while jj < m:
         sol.append("Insert")
-        j -= 1
+        jj += 1
 
-    sol.reverse()
-    val = M[n][m].item() # Costo final
-    return val, sol # Devuelve el costo final desde M[n][m]
+    print("Secuencia de operaciones:")
+    print(sol)
+
+
+
+
+x = "ingenioso"
+y = "ingeniero"
+terminal_inteligente(x,y)
+
+x2 = "algorithm"
+y2 = "altruistic"
+terminal_inteligente(x2,y2)
+
+
+x3 = "francesa"
+y3 = "ancestro"
+terminal_inteligente(x3,y3)

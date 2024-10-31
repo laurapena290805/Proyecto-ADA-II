@@ -80,21 +80,21 @@ def terminal_inteligente_dp(a, d, r, i, k,x, y):
     while ii < n or jj < m:
         # Si ambos caracteres son iguales, avanzamos
         if ii < n and jj < m and x[ii] == y[jj]:
-            sol.append("Advance")
+            sol.append("Avanzar")
             ii += 1
             jj += 1
         # Si la operación corresponde a reemplazar un carácter
         elif ii < n and jj < m and M[ii][jj] == M[ii + 1][jj + 1] + r:
-            sol.append("Replace")
+            sol.append("Remplazar")
             ii += 1
             jj += 1
         # Si la operación corresponde a borrar un carácter
         elif ii < n and M[ii][jj] == M[ii + 1][jj] + d:
-            sol.append("Delete")
+            sol.append("Borral")
             ii += 1
         # Si la operación corresponde a insertar un carácter
         elif jj < m and M[ii][jj] == M[ii][jj + 1] + i:
-            sol.append("Insert")
+            sol.append("Insertar")
             jj += 1
         # Si la operación corresponde a "kill" (matar el resto del texto en 'x')
         elif ii < n and M[ii][jj] == k + (m - jj) * i:

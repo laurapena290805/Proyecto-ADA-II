@@ -50,6 +50,5 @@ def subasta_dp(A, B, n, ofertas):
 
    
     valor_final = int(dp[n][A] + (ofertas[n][0] * mejor_asignacion[n]))
-    return valor_final, mejor_asignacion.tolist()
-
+    return mejor_asignacion.tolist(),valor_final
 

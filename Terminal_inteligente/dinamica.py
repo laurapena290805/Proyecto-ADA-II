@@ -19,7 +19,6 @@ Santiago Reyes Rodriguez
 ### ESTRATEGIA DE PROGRAMACIÓN DINAMICA
 
 import numpy as np
-
 a = 1
 d = 2
 r = 3
@@ -29,68 +28,111 @@ k = 1
 def terminal_inteligente(x, y):
     n = len(x)
     m = len(y)
-    M = np.zeros((n+1, m+1), dtype=int)
 
-    for i in range(n + 1):
-        M[i][0] = i * k
-    for j in range(m + 1):
-        M[0][j] = j * i
+    M = np.zeros((n+1, m+1))
+    M.fill(np.inf)
 
-    for i in range(1, n + 1):
-        for j in range(1, m + 1):
-            if x[i-1] == y[j-1]:
-                M[i][j] = M[i-1][j-1] + a
-            else:
-                M[i][j] = min(
-                    M[i-1][j-1] + r,
-                    M[i-1][j] + d,
-                    M[i][j-1] + i
-                )
-        #condicion para kill
-        if i > 1 and x[i-1] == y[j-2] and x[i-2] == y[j-1]:
-            M[i][j] = min(M[i][j], M[i-2][j-2] + k)
+    M[n][m] = 0
+
+    for ii in range(n, -1, -1):
+        for jj in range(m, -1, -1):
+            if ii == n and jj == m:
+                continue
+
+            if ii == n:
+                M[ii][jj] = (m - jj) * i
+                continue
+
+            if jj == m:
+                costo_borrar = (n - ii) * d
+                costo_kill = k
+                if costo_kill < costo_borrar:
+                    M[ii][jj] = costo_kill
+                else:
+                    M[ii][jj] = costo_borrar
+                continue
+
+            if x[ii] == y[jj]:
+                if M[ii + 1][jj + 1] + a < M[ii][jj]:
+                    M[ii][jj] = M[ii + 1][jj + 1] + a
+
+            if M[ii + 1][jj + 1] + r < M[ii][jj]:
+                M[ii][jj] = M[ii + 1][jj + 1] + r
+
+            if M[ii + 1][jj] + d < M[ii][jj]:
+                M[ii][jj] = M[ii + 1][jj] + d
+
+            if M[ii][jj + 1] + i < M[ii][jj]:
+                M[ii][jj] = M[ii][jj + 1] + i
 
 
-    i, j = n, m
+            costo_kill = k + (m - jj) * i
+            if costo_kill < M[ii][jj]:
+                M[ii][jj] = costo_kill
+
+            M[ii][jj] = min(
+                M[ii][jj],
+                M[ii + 1][jj + 1] + r,
+                M[ii + 1][jj] + d,
+                M[ii][jj + 1] + i,
+                M[ii + 1][jj] + k + (m - jj) * i
+            )
+
+    print("El costo mínimo es: ", M[0][0])
+
+    ii, jj = 0, 0
+
     sol = []
-    while i > 0 and j > 0:
-        if x[i-1] == y[j-1]:
+    while ii < n or jj < m:
+        # Si ambos caracteres son iguales, avanzamos
+        if ii < n and jj < m and x[ii] == y[jj]:
             sol.append("Advance")
-            i -= 1
-            j -= 1
-        else:
-            if M[i][j] == M[i-1][j-1] + r:
-                sol.append("Replace")
-                i -= 1
-                j -= 1
-            elif M[i][j] == M[i-1][j] + d:
-                sol.append("Delete")
-                i -= 1
-            elif M[i][j] == M[i][j-1] + i:
+            ii += 1
+            jj += 1
+        # Si la operación corresponde a reemplazar un carácter
+        elif ii < n and jj < m and M[ii][jj] == M[ii + 1][jj + 1] + r:
+            sol.append("Replace")
+            ii += 1
+            jj += 1
+        # Si la operación corresponde a borrar un carácter
+        elif ii < n and M[ii][jj] == M[ii + 1][jj] + d:
+            sol.append("Delete")
+            ii += 1
+        # Si la operación corresponde a insertar un carácter
+        elif jj < m and M[ii][jj] == M[ii][jj + 1] + i:
+            sol.append("Insert")
+            jj += 1
+        # Si la operación corresponde a "kill" (matar el resto del texto en 'x')
+        elif ii < n and M[ii][jj] == k + (m - jj) * i:
+            sol.append("Kill")
+            ii = n
+            while jj < m:
                 sol.append("Insert")
-                j -= 1
-            else:
-                sol.append("Kill")
-                i -= 1
-                while j > 0:
-                    sol.append("Insert")
-                    j -= 1
+                jj += 1
 
-    while i > 0:
+    # Añadimos cualquier operación pendiente
+    while ii < n:
         sol.append("Delete")
-        i -= 1
-    while j > 0:
+        ii += 1
+    while jj < m:
         sol.append("Insert")
-        j -= 1
+        jj += 1
 
-    sol.reverse()
-    return sol, M[0][0]
+    print("Secuencia de operaciones:")
+    print(sol)
 
-if __name__ == '__main__':
-    x = "ingenioso"
-    y = "ingeniero"
-    terminal_inteligente(x, y)
 
-    x2 = "algorithm"
-    y2 = "altruistic"
-    terminal_inteligente(x2, y2)
+
+
+x = "ingenioso"
+y = "ingeniero"
+terminal_inteligente(x,y)
+
+x2 = "algorithm"
+y2 = "altruistic"
+terminal_inteligente(x2,y2)
+
+
+x3 = "francesa"
+y3 = "ancestro"
+terminal_inteligente(x3,y3)

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-from Terminal_inteligente.dinamica import terminal_inteligente
+from Terminal_inteligente.dinamica import terminal_inteligente_dp
 from Terminal_inteligente.fuerza_bruta import fuerza_bruta
 from Terminal_inteligente.voraz import programacion_voraz
 from Subasta_publica.dinamica import subasta_dp
@@ -53,7 +53,7 @@ def tiempos_terminal_inteligente():
     tiempos = [[], [], []]
 
     for caso in casos:
-        result_dinamica = tiempo_ejecucion(terminal_inteligente, caso)
+        result_dinamica = tiempo_ejecucion(terminal_inteligente_dp, caso)
         result_fuerza_bruta = tiempo_ejecucion(fuerza_bruta, caso)
         result_voraz = tiempo_ejecucion(programacion_voraz, caso)
 

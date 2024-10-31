@@ -19,13 +19,9 @@ Santiago Reyes Rodriguez
 ### ESTRATEGIA DE PROGRAMACIÓN DINAMICA
 
 import numpy as np
-a = 1
-d = 2
-r = 3
-i = 2
-k = 1
 
-def terminal_inteligente(x, y):
+
+def terminal_inteligente_dp(a, d, r, i, k,x, y):
     n = len(x)
     m = len(y)
 
@@ -78,8 +74,6 @@ def terminal_inteligente(x, y):
                 M[ii + 1][jj] + k + (m - jj) * i
             )
 
-    print("El costo mínimo es: ", M[0][0])
-
     ii, jj = 0, 0
 
     sol = []
@@ -118,21 +112,4 @@ def terminal_inteligente(x, y):
         sol.append("Insert")
         jj += 1
 
-    print("Secuencia de operaciones:")
-    print(sol)
-
-
-
-
-x = "ingenioso"
-y = "ingeniero"
-terminal_inteligente(x,y)
-
-x2 = "algorithm"
-y2 = "altruistic"
-terminal_inteligente(x2,y2)
-
-
-x3 = "francesa"
-y3 = "ancestro"
-terminal_inteligente(x3,y3)
+    return int(M[0][0]), sol

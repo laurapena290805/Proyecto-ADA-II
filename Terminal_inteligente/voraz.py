@@ -1,5 +1,5 @@
 
-def terminal_voraz(a,d,r,i,k,x, y):
+def terminal_inteligente_voraz(a, d, r, i, k, x, y):
     n = len(x)
     m = len(y)
     

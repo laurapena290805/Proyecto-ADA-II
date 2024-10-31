@@ -4,15 +4,15 @@ from flask_cors import CORS
 from Subasta_publica.dinamica import subasta_dp
 from Subasta_publica.fuerza_bruta import subasta_fuerza_bruta
 from Subasta_publica.voraz import subasta_voraz
-from Terminal_inteligente.dinamica import terminal_dinamica
+from Terminal_inteligente.dinamica import terminal_inteligente_dp
 from Terminal_inteligente.fuerza_bruta import terminal_fuerza_bruta
-from Terminal_inteligente.voraz import terminal_voraz
+from Terminal_inteligente.voraz import terminal_inteligente_voraz
 
 
 
 app = Flask(__name__, static_folder='web', static_url_path='/')
 
-# Permitir CORS de todos los dominios
+
 CORS(app)
 
 @app.route('/')
@@ -42,9 +42,6 @@ def run_algorithm():
 
 
 
-
-
-
 @app.route('/terminal', methods=['POST'])
 def run_algorithmT():
     data = request.json
@@ -59,11 +56,11 @@ def run_algorithmT():
     algoritmo = data['algoritmo']
     
     if algoritmo == 'dinamica':
-        costo,operaciones = terminal_dinamica(A, D, R, I, K, cadenaX, cadenaY)
+        costo,operaciones = terminal_inteligente_dp(A, D, R, I, K, cadenaX, cadenaY)
     elif algoritmo == 'fuerza_bruta':
         costo,operaciones = terminal_fuerza_bruta(A, D, R, I, K, cadenaX, cadenaY)
     elif algoritmo == 'voraz':
-        costo,operaciones = terminal_voraz(A, D, R, I, K, cadenaX, cadenaY)
+        costo,operaciones = terminal_inteligente_voraz(A, D, R, I, K, cadenaX, cadenaY)
     return jsonify({'costo': costo, 'operaciones': operaciones})
 
 

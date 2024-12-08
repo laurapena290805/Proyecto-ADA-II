@@ -9,13 +9,13 @@ def terminal_inteligente_voraz(a, d, r, i, k, x, y):
 
     while ii < n or jj < m:
         if ii < n and jj < m and x[ii] == y[jj]:
-            sol.append("Advance")
+            sol.append("Advance " + x[ii])
             costo_total += a
             ii += 1
             jj += 1
         
         elif ii == n:
-            sol.append("Insert")
+            sol.append("Insert " + y[jj])
             costo_total += i
             jj += 1
 
@@ -26,7 +26,7 @@ def terminal_inteligente_voraz(a, d, r, i, k, x, y):
                 costo_total += k
                 break
             else:
-                sol.append("Delete")
+                sol.append("Delete " + x[ii])
                 costo_total += d
                 ii += 1
 
@@ -40,21 +40,21 @@ def terminal_inteligente_voraz(a, d, r, i, k, x, y):
             mejor_opcion = min(costo_avanzar, costo_reemplazar, costo_borrar, costo_insertar, costo_kill)
 
             if mejor_opcion == costo_avanzar:
-                sol.append("Advance")
+                sol.append("Advance " + x[ii])
                 costo_total += a
                 ii += 1
                 jj += 1
             elif mejor_opcion == costo_reemplazar:
-                sol.append("Replace")
+                sol.append("Replace " + x[ii] + " por " + y[jj])
                 costo_total += r
                 ii += 1
                 jj += 1
             elif mejor_opcion == costo_borrar:
-                sol.append("Delete")
+                sol.append("Delete " + x[ii])
                 costo_total += d
                 ii += 1
             elif mejor_opcion == costo_insertar:
-                sol.append("Insert")
+                sol.append("Insert " + y[jj])
                 costo_total += i
                 jj += 1
             elif mejor_opcion == costo_kill:
@@ -63,7 +63,7 @@ def terminal_inteligente_voraz(a, d, r, i, k, x, y):
                 break
 
     while jj < m:
-        sol.append("Insert")
+        sol.append("Insert " + y[jj])
         costo_total += i
         jj += 1
     

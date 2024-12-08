@@ -80,36 +80,36 @@ def terminal_inteligente_dp(a, d, r, i, k,x, y):
     while ii < n or jj < m:
         # Si ambos caracteres son iguales, avanzamos
         if ii < n and jj < m and x[ii] == y[jj]:
-            sol.append("Avanzar")
+            sol.append("Advance " + x[ii])
             ii += 1
             jj += 1
         # Si la operación corresponde a reemplazar un carácter
         elif ii < n and jj < m and M[ii][jj] == M[ii + 1][jj + 1] + r:
-            sol.append("Remplazar")
+            sol.append("Replace " + x[ii] + " por " + y[jj])
             ii += 1
             jj += 1
         # Si la operación corresponde a borrar un carácter
         elif ii < n and M[ii][jj] == M[ii + 1][jj] + d:
-            sol.append("Borral")
+            sol.append("Delete " + x[ii])
             ii += 1
         # Si la operación corresponde a insertar un carácter
         elif jj < m and M[ii][jj] == M[ii][jj + 1] + i:
-            sol.append("Insertar")
+            sol.append("Insert " + y[jj])
             jj += 1
         # Si la operación corresponde a "kill" (matar el resto del texto en 'x')
         elif ii < n and M[ii][jj] == k + (m - jj) * i:
             sol.append("Kill")
             ii = n
             while jj < m:
-                sol.append("Insert")
+                sol.append("Insert " + y[jj])
                 jj += 1
 
     # Añadimos cualquier operación pendiente
     while ii < n:
-        sol.append("Delete")
+        sol.append("Delete " + x[ii])
         ii += 1
     while jj < m:
-        sol.append("Insert")
+        sol.append("Insert " + y[jj])
         jj += 1
 
     return int(M[0][0]), sol

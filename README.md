@@ -18,8 +18,6 @@ Y para la interfaz grafica se usó el lenguaje de Dart con un proyecto en el ent
 
 > **IMPORTANTE:** Para probar la app, debe ejecutar el archivo `app.py` que está en el directorio raíz `Proyecto-ADA-II/app.py` y acceder a la URL que genera.
 
-##Video Youtube
-<div style="border: 2px solid #3498db; padding: 10px; border-radius: 5px; background-color: #eaf2f8;">
-  <strong>Enlace al video:</strong> El video de sustentación del proyecto se encuentra en el archivo <a href="videoYT.txt">videoYT.txt</a>.
-</div>
+**📄 Enlace al video:** Para ver el video en YouTube, consulta el archivo [videoYT.txt](videoYT.txt).
+
 

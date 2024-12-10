@@ -7,7 +7,7 @@
 - *Santiago Reyes*
 
 >[!IMPORTANT]
-> Para probar la app, debe instalar las defendidas necesarias
+> Para probar la app despues de clonarla en su entorno local(git clone /link del repo), debe instalar las defendidas necesarias
 
 ```bash
 pip install -r requirements.txt

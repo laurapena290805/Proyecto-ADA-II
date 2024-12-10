@@ -7,7 +7,7 @@
 - *Santiago Reyes*
 
 >[!IMPORTANT]
-> Para probar la app, debe ejecutar el archivo `app.py` que está en el directorio raíz `Proyecto-ADA-II/app.py` y acceder a la URL que genera.
+> Para probar la app, debe ejecutar el archivo [app.py](app.py) que está en el directorio raíz `Proyecto-ADA-II/app.py` y acceder a la URL que genera.
 
 >[!NOTE]
 >Para ver la sustentación del proyecto en YT, acceda al archivo [videoYT.txt](videoYT.txt) donde encontrará el enlace correspondiente.
